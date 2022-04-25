@@ -1,0 +1,11 @@
+---
+- name: Node exporter playbook
+  hosts: all
+  roles:
+    - cloudalchemy.node_exporter
+  tasks:
+    - name: Check Node Exporter running
+      command: sudo systemctl status node_exporter
+      ignore_errors: yes
+      register: result
+    - debug: var=result.stdout_lines

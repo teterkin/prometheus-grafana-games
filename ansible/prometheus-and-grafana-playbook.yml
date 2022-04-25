@@ -1,0 +1,29 @@
+- name: Ensure Docker-compose run to ensure Prometheus and Grafana running
+  hosts: all
+  become: yes
+  tasks:
+    - name: Ensure pip is installed
+      ansible.builtin.package:
+        name:
+          - pip
+        state: latest
+    - name: Ensure default docker librares absent
+      pip:
+        name:
+          - docker
+          - docker-py
+          - docker-compose
+        state: absent
+    - name: Ensure pip3 docker-compose library is present and latest
+      pip:
+        name: 
+          - docker-compose
+        state: latest
+    - name: deploy Docker Compose stack
+      docker_compose:
+        project_src: ./docker
+        files:
+        - docker-compose.yml
+      register: output
+    - ansible.builtin.debug:
+        var: output
