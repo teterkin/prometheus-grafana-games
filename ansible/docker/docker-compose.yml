@@ -44,6 +44,8 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD}
       - GF_USERS_ALLOW_SIGN_UP=false
     restart: unless-stopped
+    depends_on:
+      - prometheus
     expose:
       - 3000
     ports:
